@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 
 public class DocumentReader {
-    public static ArrayList<String> read(String path){
+    public static String read(String path){
 
-        ArrayList<String> words = new ArrayList<>();
+        String words = "";
 
         try{
             File file = new File(path);
@@ -15,7 +15,7 @@ public class DocumentReader {
 
             while(scanner.hasNext()){
                 String word = scanner.next();
-                words.add(word);
+                words += " " + word;
             }
             scanner.close();
 

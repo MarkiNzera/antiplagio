@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 
 public class Document {
-    private final ArrayList<String> wordOfDocument;
+    private final String wordOfDocument;
 
-    public Document(ArrayList<String> words){
+    public Document(String words){
         wordOfDocument = words;
     }
 
-    public ArrayList<String> getWordOfDocument(){
+    public String getWordOfDocument(){
         return wordOfDocument;
     }
 
     public void printAllWords(){
-        for(String word : wordOfDocument){
+        for(String word : wordOfDocument.split(" ")){
             System.out.println(word);
         }
     }

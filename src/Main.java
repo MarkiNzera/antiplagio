@@ -3,7 +3,16 @@ import java.util.LinkedList;
 
 public class Main{
     public static void main(String[] args){
-        //testDocumentReader();
+        testDocumentReader();
+
+
+    }
+
+    public static void testFullAplication(){
+        
+    }
+
+    public static void testPlagiarismChecker(){
         String[] text1 = {"A", "B", "A", "B", "D", "A", "B", "A",
                 "C", "D", "A", "B", "A", "B", "C", "A", "B", "A", "B"};
         String[] pattern1 = {"A", "B", "A", "B", "C", "A", "B", "A", "B"};
@@ -20,7 +29,6 @@ public class Main{
                 System.out.println(index);
             }
         }
-
     }
 
     private static final int PRIME = 101; // Número primo para a função de hash
@@ -60,7 +68,7 @@ public class Main{
     }
 
     public static void testDocumentReader(){
-        ArrayList<String> words = DocumentReader.read("texts/text1.txt");
+        String words = DocumentReader.read("texts/text1.txt");
 
         Document document = new Document(words);
         document.printAllWords();

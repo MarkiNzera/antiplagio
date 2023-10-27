@@ -8,7 +8,7 @@ public class PlagiarismChecker {
         documents = new ArrayList<>();
     }
 
-    public void addDocument(ArrayList<String> content){
+    public void addDocument(String content){
         documents.add(new Document(content));
     }
 
@@ -22,24 +22,24 @@ public class PlagiarismChecker {
 //        }
 //    }
 
-    private ArrayList<Integer> search(String[] text, String[] pattern){
-        ArrayList<Integer> positionOfPlagiarisms = new ArrayList<>();
-        int patternLength = pattern.length();
-        int textLength = text.length();
-        long patternHash = hash(pattern, patternLength);
-        long textHash = hash(text.substring(0, patternLength), patternLength);
-
-        for(int i = 0; i <= textLength - patternLength; i++){
-            if(patternHash == textHash && text.substring(i, i + patternLength).equals(pattern)){
-                positionOfPlagiarisms.add(i);
-            }
-            if(i < textLength - patternLength){
-                textHash = recalculateHash(text, textHash, i, patternLength);
-            }
-        }
-
-        return positionOfPlagiarisms;
-    }
+//    private ArrayList<Integer> search(String[] text, String[] pattern){
+//        ArrayList<Integer> positionOfPlagiarisms = new ArrayList<>();
+//        int patternLength = pattern.length();
+//        int textLength = text.length();
+//        long patternHash = hash(pattern, patternLength);
+//        long textHash = hash(text.substring(0, patternLength), patternLength);
+//
+//        for(int i = 0; i <= textLength - patternLength; i++){
+//            if(patternHash == textHash && text.substring(i, i + patternLength).equals(pattern)){
+//                positionOfPlagiarisms.add(i);
+//            }
+//            if(i < textLength - patternLength){
+//                textHash = recalculateHash(text, textHash, i, patternLength);
+//            }
+//        }
+//
+//        return positionOfPlagiarisms;
+//    }
 
     private long hash(String str, int len) {
         long hash = 0;
