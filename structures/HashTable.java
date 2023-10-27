@@ -21,7 +21,9 @@ public class HashTable<K, V>{
         }
     }
 
-    public LinkedList<Node<K, V>>[] table;
+    private LinkedList<Node<K, V>>[] table;
+    private int tableMaxSize = 593;
+    private int size;
 
     public HashTable(){
         table = new LinkedList[tableMaxSize];
@@ -30,7 +32,7 @@ public class HashTable<K, V>{
         }
     }
 
-    private HashTableEC(int tam){
+    private HashTable(int tam){
         table = new LinkedList[tam];
         for(int i = 0; i < tam; i++){
             table[i] = new LinkedList<>();
@@ -38,15 +40,19 @@ public class HashTable<K, V>{
         tableMaxSize = tam;
     }
 
+    private int hashFunction(K key){
+        return Math.abs(key.hashCode()) % tableMaxSize;
+    }
+
     private void resize() {
 
-        HashTableEC<K, V> newtable = new HashTableEC<>(tableMaxSize * 2);
+        HashTable<K, V> newtable = new HashTable<>(tableMaxSize * 2);
 
         for(int i = 0; i < tableMaxSize; i++){
             if(table[i] != null){
                 for(Node<K, V> node : table[i]){
                     if(node != null){
-                        newtable.insert(node.getKey(), node.getValue());
+                        newtable.put(node.getKey(), node.getValue());
                     }
                 }
             }
@@ -56,8 +62,7 @@ public class HashTable<K, V>{
         this.table = newtable.table;
     }
 
-    @Override
-    public void insert(K key, V value){
+    public void put(K key, V value){
 
         if(tableMaxSize * 0.7 < size){
             resize();
@@ -76,7 +81,6 @@ public class HashTable<K, V>{
 
     }
 
-    @Override
     public V get(K key){
         int index = hashFunction(key);
         for(Node<K, V> item : table[index]){
@@ -88,7 +92,6 @@ public class HashTable<K, V>{
         return null;
     }
 
-    @Override
     public void remove(K key){
         int index = hashFunction(key);
         for(Node<K, V> item: table[index]){
