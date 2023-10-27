@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 // External Chaining
@@ -44,7 +45,7 @@ public class HashTable<K, V>{
         return Math.abs(key.hashCode()) % tableMaxSize;
     }
 
-    private void resize() {
+    private void resize() throws Exception{
 
         HashTable<K, V> newtable = new HashTable<>(tableMaxSize * 2);
 
@@ -62,7 +63,7 @@ public class HashTable<K, V>{
         this.table = newtable.table;
     }
 
-    public void put(K key, V value){
+    public void put(K key, V value) throws Exception{
 
         if(tableMaxSize * 0.7 < size){
             resize();
@@ -71,11 +72,11 @@ public class HashTable<K, V>{
         int index = hashFunction(key);
 
         for(Node<K, V> item : table[index]){
-            if(item.getKey().equals(key)){
-                item.setValue(value);
-                return;
+            if(item.getKey().equals(key) && item.getValue().equals(value)){
+                throw new Exception("Impossivel ter 2 nós com o mesmo par chave e valor");
             }
         }
+
         table[index].push(new Node<>(key, value));
         this.size++;
 
@@ -92,14 +93,27 @@ public class HashTable<K, V>{
         return null;
     }
 
-    public void remove(K key){
+    public void remove(K key) throws Exception{
         int index = hashFunction(key);
-        for(Node<K, V> item: table[index]){
+        for(Node<K, V> item : table[index]){
             if(item.getKey().equals(key)){
                 table[index].remove(item);
                 size--;
                 return;
             }
         }
+
+        throw new Exception("Chave não existente");
+    }
+
+    public ArrayList<V> findAll(K key){
+        int index = hashFunction(key);
+
+        ArrayList<V> temp = new ArrayList<>();
+        for(Node<K, V> item : table[index]){
+            temp.add(item.getValue());
+        }
+
+        return temp;
     }
 }
