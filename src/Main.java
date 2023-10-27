@@ -9,9 +9,8 @@ public class Main{
     public static void testDocumentReader(){
         ArrayList<String> words = DocumentReader.read("texts/text1.txt");
 
-        for(String word : words){
-            System.out.println(word);
-        }
+        Document document = new Document(words);
+        document.printAllWords();
     }
 
     public static void testHash(){
