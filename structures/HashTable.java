@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-// External Chaining
 public class HashTable<K, V>{
-    private static class Node<K, V>{
+    public static class HashNode<K, V>{
         private final K key;
         private V value;
-        public Node(K key, V value) {
+        public HashNode(K key, V value) {
             this.key = key;
             setValue(value);
         }
@@ -22,7 +21,7 @@ public class HashTable<K, V>{
         }
     }
 
-    private LinkedList<Node<K, V>>[] table;
+    private LinkedList<HashNode<K, V>>[] table;
     private int tableMaxSize = 593;
     private int size;
 
@@ -45,13 +44,13 @@ public class HashTable<K, V>{
         return Math.abs(key.hashCode()) % tableMaxSize;
     }
 
-    private void resize() throws Exception{
+    private void resize(){
 
         HashTable<K, V> newtable = new HashTable<>(tableMaxSize * 2);
 
         for(int i = 0; i < tableMaxSize; i++){
             if(table[i] != null){
-                for(Node<K, V> node : table[i]){
+                for(HashNode<K, V> node : table[i]){
                     if(node != null){
                         newtable.put(node.getKey(), node.getValue());
                     }
@@ -63,7 +62,7 @@ public class HashTable<K, V>{
         this.table = newtable.table;
     }
 
-    public void put(K key, V value) throws Exception{
+    public void put(K key, V value){
 
         if(tableMaxSize * 0.7 < size){
             resize();
@@ -77,14 +76,14 @@ public class HashTable<K, V>{
 //            }
 //        }
 
-        table[index].push(new Node<>(key, value));
+        table[index].push(new HashNode<>(key, value));
         this.size++;
 
     }
 
     public V get(K key){
         int index = hashFunction(key);
-        for(Node<K, V> item : table[index]){
+        for(HashNode<K, V> item : table[index]){
             if(item.getKey().equals(key)){
                 return item.getValue();
             }
@@ -93,9 +92,9 @@ public class HashTable<K, V>{
         return null;
     }
 
-    public void remove(K key) throws Exception{
+    public void remove(K key){
         int index = hashFunction(key);
-        for(Node<K, V> item : table[index]){
+        for(HashNode<K, V> item : table[index]){
             if(item.getKey().equals(key)){
                 table[index].remove(item);
                 size--;
@@ -103,14 +102,13 @@ public class HashTable<K, V>{
             }
         }
 
-        throw new Exception("Chave não existente");
     }
 
     public ArrayList<V> findAll(K key){
         int index = hashFunction(key);
 
         ArrayList<V> temp = new ArrayList<>();
-        for(Node<K, V> item : table[index]){
+        for(HashNode<K, V> item : table[index]){
             temp.add(item.getValue());
         }
 

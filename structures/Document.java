@@ -7,6 +7,10 @@ public class Document {
         wordOfDocument = words;
     }
 
+    public ArrayList<String> getWordOfDocument(){
+        return wordOfDocument;
+    }
+
     public void printAllWords(){
         for(String word : wordOfDocument){
             System.out.println(word);
