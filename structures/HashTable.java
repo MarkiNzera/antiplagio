@@ -71,11 +71,11 @@ public class HashTable<K, V>{
 
         int index = hashFunction(key);
 
-        for(Node<K, V> item : table[index]){
-            if(item.getKey().equals(key) && item.getValue().equals(value)){
-                throw new Exception("Impossivel ter 2 nós com o mesmo par chave e valor");
-            }
-        }
+//        for(Node<K, V> item : table[index]){
+//            if(item.getKey().equals(key) && item.getValue().equals(value)){
+//                throw new Exception("Impossivel ter 2 nós com o mesmo par chave e valor");
+//            }
+//        }
 
         table[index].push(new Node<>(key, value));
         this.size++;
