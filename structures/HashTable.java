@@ -7,7 +7,7 @@ public class HashTable<K, V>{
         private V value;
         public Node(K key, V value) {
             this.key = key;
-
+            setValue(value);
         }
         public K getKey(){
             return this.key;
