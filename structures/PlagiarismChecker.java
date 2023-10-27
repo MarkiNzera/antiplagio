@@ -1,19 +1,29 @@
 import java.util.ArrayList;
 
 public class PlagiarismChecker {
-    private HashTable<String, Document> documentHash;
+    private ArrayList<Document> documents;
     private final int primeNumber = 101;
 
     public PlagiarismChecker(){
-        documentHash = new HashTable<>();
+        documents = new ArrayList<>();
     }
 
-    public void addDocument(String documentId, ArrayList<String> content){
-        documentHash.put(documentId, new Document(content));
+    public void addDocument(ArrayList<String> content){
+        documents.add(new Document(content));
     }
 
-    private ArrayList<Integer> search(String text, String pattern){
-        ArrayList<Integer> positionOfPlgiarisms = new ArrayList<>();
+    public void addDocument(Document document){
+        documents.add(document);
+    }
+
+//    public void findPlagiarismOfAllDocuments(Document text){
+//        for(Document document : documents){
+//            search(document, text);
+//        }
+//    }
+
+    private ArrayList<Integer> search(String[] text, String[] pattern){
+        ArrayList<Integer> positionOfPlagiarisms = new ArrayList<>();
         int patternLength = pattern.length();
         int textLength = text.length();
         long patternHash = hash(pattern, patternLength);
@@ -21,13 +31,14 @@ public class PlagiarismChecker {
 
         for(int i = 0; i <= textLength - patternLength; i++){
             if(patternHash == textHash && text.substring(i, i + patternLength).equals(pattern)){
-                positionOfPlgiarisms.add(i);
+                positionOfPlagiarisms.add(i);
             }
             if(i < textLength - patternLength){
                 textHash = recalculateHash(text, textHash, i, patternLength);
             }
         }
 
+        return positionOfPlagiarisms;
     }
 
     private long hash(String str, int len) {
