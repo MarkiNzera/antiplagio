@@ -3,15 +3,15 @@ import java.util.StringTokenizer;
 
 public class Document {
     private final String nameOfDocument;
-    private final ArrayList<String> wordOfDocument;
+    private final String wordOfDocument;
 
     public Document(String name, String words){
         nameOfDocument = name;
         wordOfDocument = preprocess(words);
     }
 
-    public ArrayList<String> getWordOfDocument(){
-        return wordOfDocument;
+    public String[] getWordOfDocument(){
+        return wordOfDocument.split(" ");
     }
 
     public String getNameOfDocument(){
@@ -19,21 +19,21 @@ public class Document {
     }
 
     public void printAllWords(){
-        for(String word : wordOfDocument){
+        for(String word : wordOfDocument.split(" ")){
             System.out.println(word);
         }
     }
 
-    private ArrayList<String> preprocess(String words){
+    private String preprocess(String words){
         StringTokenizer tokenizer = new StringTokenizer(words);
 
-        ArrayList<String> tokens = new ArrayList<>();
+        StringBuilder tokens = new StringBuilder();
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
-            tokens.add(token);
+            tokens.append(token).append(" ");
         }
 
-        return tokens;
+        return tokens.toString();
     }
 
 }

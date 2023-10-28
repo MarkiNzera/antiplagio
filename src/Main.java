@@ -11,7 +11,8 @@ import opennlp.tools.tokenize.TokenizerModel;
 
 public class Main{
     public static void main(String[] args){
-        testDocumentReader();
+//        testDocumentReader();
+        testPlagiarismChecker();
     }
 
 //    public static void testFullAplication(){
@@ -24,22 +25,17 @@ public class Main{
 //    }
 
     public static void testPlagiarismChecker(){
-        String[] text1 = {"A", "B", "A", "B", "D", "A", "B", "A",
-                "C", "D", "A", "B", "A", "B", "C", "A", "B", "A", "B"};
-        String[] pattern1 = {"A", "B", "A", "B", "C", "A", "B", "A", "B"};
+        Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
+        Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
+        Document plagiarismText = DocumentReader.read("documento plaiado", "texts/plagiarism.txt");
 
-        String text = "ABABDABACDABABCABAB";
-        String pattern = "ABABCABAB";
-        ArrayList<Integer> indices = search(text, pattern);
+        PlagiarismChecker plagiarismChecker = new PlagiarismChecker(6);
 
-        if (indices.isEmpty()) {
-            System.out.println("Padrão não encontrado no texto.");
-        } else {
-            System.out.println("Ocorrências do padrão nos índices:");
-            for (int index : indices) {
-                System.out.println(index);
-            }
-        }
+        plagiarismChecker.addDocument(text1);
+        plagiarismChecker.addDocument(text2);
+
+        plagiarismChecker.checkPlagiarism(plagiarismText, 3);
+
     }
 
     private static final int PRIME = 101; // Número primo para a função de hash

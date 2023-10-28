@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class DocumentReader {
     public static Document read(String nameOfDocumente, String path){
 
-        // ArrayList<String> words = new ArrayList<>();
         StringBuilder words = new StringBuilder(" ");
 
         try{
@@ -16,13 +15,11 @@ public class DocumentReader {
 
             while(scanner.hasNext()){
                 String word = scanner.next();
-                words.append(word + " ");
+                words.append(word).append(" ");
             }
             scanner.close();
 
-            Document newDocument = new Document(nameOfDocumente, words.toString());
-
-            return newDocument;
+            return new Document(nameOfDocumente, words.toString());
         } catch (FileNotFoundException e){
             System.err.println("O arquivo não pode ser encontrado");
         }

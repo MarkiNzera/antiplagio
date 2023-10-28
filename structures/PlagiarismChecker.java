@@ -6,17 +6,46 @@ import java.util.ArrayList;
 public class PlagiarismChecker {
     private ArrayList<Document> documents;
     private final int primeNumber = 101;
-    private HashTable<Long, Document> documentIndex = new HashTable<>();
-    private int n;
-    private ArrayList<String> stopwords;
+    private HashTable<String, ArrayList<Document>> documentIndex = new HashTable<>();
+    private int kGram;
 
-    public PlagiarismChecker(int n){
+    public PlagiarismChecker(int kGram){
         documents = new ArrayList<>();
-        this.n = n;
+        this.kGram = kGram;
     }
 
-    public void addDocument(Document content){
-        documents.add(content);
+    public void addDocument(Document documentText){
+        String[] words = documentText.getWordOfDocument();
+
+        for(String word : words){
+            if(!documentIndex.contains(word)){
+                documentIndex.put(word, new ArrayList<>());
+            }
+            documentIndex.get(word).add(documentText);
+        }
+    }
+
+
+    public void checkPlagiarism(Document documentText, int m){
+        String[] words = documentText.getWordOfDocument();
+
+        for(int i = 0; i <= words.length - m; i++){
+            StringBuilder sequence = new StringBuilder();
+            for(int j = i; j < i + m; j++){
+                sequence.append(words[j]).append(" ");
+            }
+
+            String sequenceStr = sequence.toString().trim();
+
+            if(documentIndex.contains(sequenceStr)){
+                ArrayList<Document> matchingDocuments = documentIndex.get(sequenceStr);
+                for(Document matchingDocument : matchingDocuments){
+                    if(!matchingDocument.getWordOfDocument().equals(documentText)){
+                        System.out.println("Plágio encontrado em: " + matchingDocument.getWordOfDocument());
+                    }
+                }
+            }
+        }
     }
 
 //    public void indexDocument(String documentName, ArrayList<String> words){
