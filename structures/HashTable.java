@@ -81,6 +81,17 @@ public class HashTable<K, V>{
 
     }
 
+    public boolean contains(K key){
+        int index = hashFunction(key);
+        for(HashNode<K, V> item : table[index]){
+            if(item.getKey().equals(key)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public V get(K key){
         int index = hashFunction(key);
         for(HashNode<K, V> item : table[index]){

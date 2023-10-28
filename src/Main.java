@@ -3,13 +3,21 @@ import java.util.LinkedList;
 
 public class Main{
     public static void main(String[] args){
-        testDocumentReader();
-
-
+        // testDocumentReader();
     }
 
     public static void testFullAplication(){
-        
+        ArrayList<String> text1 = DocumentReader.read("texts/text1.txt");
+        ArrayList<String> text2 = DocumentReader.read("texts/text2.txt");
+        ArrayList<String> plagiarismText = DocumentReader.read("texts/plagiarism.txt");
+
+        PlagiarismChecker plagiarismChecker = new PlagiarismChecker(6);
+
+        plagiarismChecker.indexDocument("texto sobre hash", text1);
+        plagiarismChecker.indexDocument("texto sobre arvore", text2);
+
+        plagiarismChecker.checkPlagiarism(new Document("texto plagiado", plagiarismText));
+
     }
 
     public static void testPlagiarismChecker(){
@@ -68,9 +76,9 @@ public class Main{
     }
 
     public static void testDocumentReader(){
-        String words = DocumentReader.read("texts/text1.txt");
+        ArrayList<String> words = DocumentReader.read("texts/text1.txt");
 
-        Document document = new Document(words);
+        Document document = new Document("texto sobre hash",words);
         document.printAllWords();
     }
 
