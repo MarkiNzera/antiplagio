@@ -1,24 +1,27 @@
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+
+import opennlp.tools.stemmer.PorterStemmer;
+import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 
 public class Main{
     public static void main(String[] args){
-        // testDocumentReader();
+        testDocumentReader();
     }
 
-    public static void testFullAplication(){
-        ArrayList<String> text1 = DocumentReader.read("texts/text1.txt");
-        ArrayList<String> text2 = DocumentReader.read("texts/text2.txt");
-        ArrayList<String> plagiarismText = DocumentReader.read("texts/plagiarism.txt");
-
-        PlagiarismChecker plagiarismChecker = new PlagiarismChecker(6);
-
-        plagiarismChecker.indexDocument("texto sobre hash", text1);
-        plagiarismChecker.indexDocument("texto sobre arvore", text2);
-
-        plagiarismChecker.checkPlagiarism(new Document("texto plagiado", plagiarismText));
-
-    }
+//    public static void testFullAplication(){
+//        String text1 = DocumentReader.read("texts/text1.txt");
+//        String text2 = DocumentReader.read("texts/text2.txt");
+//        String plagiarismText = DocumentReader.read("texts/plagiarism.txt");
+//
+//        PlagiarismChecker plagiarismChecker = new PlagiarismChecker(6);
+//
+//    }
 
     public static void testPlagiarismChecker(){
         String[] text1 = {"A", "B", "A", "B", "D", "A", "B", "A",
@@ -76,9 +79,8 @@ public class Main{
     }
 
     public static void testDocumentReader(){
-        ArrayList<String> words = DocumentReader.read("texts/text1.txt");
+        Document document = DocumentReader.read("texto sobre hash", "texts/text1.txt");
 
-        Document document = new Document("texto sobre hash",words);
         document.printAllWords();
     }
 
