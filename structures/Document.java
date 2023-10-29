@@ -5,9 +5,12 @@ public class Document {
     private final String nameOfDocument;
     private final String contentOfDocument;
 
+    private int length;
+
     public Document(String name, String words){
         nameOfDocument = name;
         contentOfDocument = preprocess(words);
+        length = contentOfDocument.length();
     }
 
     public String getContentOfDocument(){ return contentOfDocument;}
