@@ -1,21 +1,17 @@
 import java.io.InputStream;
 import java.util.ArrayList;
 
-
-
 public class PlagiarismChecker {
     private ArrayList<Document> documents;
     private final int primeNumber = 101;
     private HashTable<String, ArrayList<Document>> documentIndex = new HashTable<>();
-    private int kGram;
 
-    public PlagiarismChecker(int kGram){
+    public PlagiarismChecker(){
         documents = new ArrayList<>();
-        this.kGram = kGram;
     }
 
     public void addDocument(Document documentText){
-        String[] words = documentText.getWordOfDocument();
+        String[] words = documentText.getWordsOfDocument();
 
         for(String word : words){
             if(!documentIndex.contains(word)){
@@ -27,7 +23,7 @@ public class PlagiarismChecker {
 
 
     public void checkPlagiarism(Document documentText, int m){
-        String[] words = documentText.getWordOfDocument();
+        String[] words = documentText.getWordsOfDocument();
 
         for(int i = 0; i <= words.length - m; i++){
             StringBuilder sequence = new StringBuilder();
@@ -40,8 +36,8 @@ public class PlagiarismChecker {
             if(documentIndex.contains(sequenceStr)){
                 ArrayList<Document> matchingDocuments = documentIndex.get(sequenceStr);
                 for(Document matchingDocument : matchingDocuments){
-                    if(!matchingDocument.getWordOfDocument().equals(documentText)){
-                        System.out.println("Plágio encontrado em: " + matchingDocument.getWordOfDocument());
+                    if(!matchingDocument.getWordsOfDocument().equals(documentText)){
+                        System.out.println("Plágio encontrado em: " + matchingDocument.getWordsOfDocument());
                     }
                 }
             }

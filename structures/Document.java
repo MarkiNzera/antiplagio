@@ -3,15 +3,17 @@ import java.util.StringTokenizer;
 
 public class Document {
     private final String nameOfDocument;
-    private final String wordOfDocument;
+    private final String contentOfDocument;
 
     public Document(String name, String words){
         nameOfDocument = name;
-        wordOfDocument = preprocess(words);
+        contentOfDocument = preprocess(words);
     }
 
-    public String[] getWordOfDocument(){
-        return wordOfDocument.split(" ");
+    public String getContentOfDocument(){ return contentOfDocument;}
+
+    public String[] getWordsOfDocument(){
+        return contentOfDocument.split(" ");
     }
 
     public String getNameOfDocument(){
@@ -19,7 +21,7 @@ public class Document {
     }
 
     public void printAllWords(){
-        for(String word : wordOfDocument.split(" ")){
+        for(String word : contentOfDocument.split(" ")){
             System.out.println(word);
         }
     }

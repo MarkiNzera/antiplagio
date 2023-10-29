@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import opennlp.tools.stemmer.PorterStemmer;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
-
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
@@ -27,14 +22,15 @@ public class Main{
     public static void testPlagiarismChecker(){
         Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
-        Document plagiarismText = DocumentReader.read("documento plaiado", "texts/plagiarism.txt");
+        Document plagiarismText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
-        PlagiarismChecker plagiarismChecker = new PlagiarismChecker(6);
+        PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        plagiarismChecker.checkPlagiarism(plagiarismText, 3);
+        System.out.println(search(text1.getContentOfDocument(), plagiarismText.getContentOfDocument()));
+        System.out.println(search("abcdef", "def"));
 
     }
 
