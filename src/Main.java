@@ -26,7 +26,7 @@ public class Main{
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        HashTable<Document, HashTable<Integer, Integer>> teste1 = plagiarismChecker.checkPlagiarismInAllDocuments(plagiarizedText, 90);
+        HashTable<Document, HashTable<Integer, Integer>> teste1 = plagiarismChecker.checkPlagiarismInAllDocuments(plagiarizedText, 176);
         // HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
 
         for(HashTable.HashNode<Document, HashTable<Integer, Integer>> documentNode : teste1.nodeSet()){

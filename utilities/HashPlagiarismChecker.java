@@ -23,23 +23,24 @@ public class HashPlagiarismChecker {
         return occurrencesInAllDocuments;
     }
 
-    public HashTable<Integer, Integer> checkPlagiarism(String checkingText, String plagiarismText, int m){
+    public HashTable<Integer, Integer> checkPlagiarism(String checkingText, String plagiarizedText, int m){
         int textLength = checkingText.length();
-        int plagiarismLength = plagiarismText.length();
+        int plagiarismLength = plagiarizedText.length();
 
         if(plagiarismLength < m){
             m = plagiarismLength;
         }
 
+        HashTable<Integer, String> patternHashes = findPatternHashes(plagiarizedText, plagiarismLength, m);
+
         HashTable<Integer, Integer> occurrences = new HashTable<>();
-        HashTable<Integer, String> patternHashes = findPatternHashes(plagiarismText, plagiarismLength, m);
 
         for(HashTable.HashNode<Integer, String> hash : patternHashes.nodeSet()){
             String patternText = hash.getValue();
             int patternHash = hash.getKey();
             int patternLength = patternText.length();
 
-            for(int i = 0; i <= textLength - patternLength; i += m){
+            for(int i = 0; i <= textLength - patternLength; i += 1){
                 String subText = checkingText.substring(i, i + patternLength);
                 int subTextHash = subText.hashCode();
 
