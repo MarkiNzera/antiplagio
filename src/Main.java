@@ -19,20 +19,27 @@ public class Main{
     public static void testPlagiarismChecker(){
         Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
-        Document plagiarismText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
+        Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
-        PlagiarismChecker1 plagiarismChecker = new PlagiarismChecker1();
+        HashPlagiarismChecker plagiarismChecker = new HashPlagiarismChecker();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        HashTable<Integer, Integer> teste1 = plagiarismChecker.checkPlagiarism(text1.getContentOfDocument(), plagiarismText.getContentOfDocument(), 200);
-        HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
+        HashTable<Document, HashTable<Integer, Integer>> teste1 = plagiarismChecker.checkPlagiarismInAllDocuments(plagiarizedText, 90);
+        // HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
 
-        for(HashTable.HashNode<Integer, Integer> node : teste1.nodeSet()){
-            System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
-            System.out.println("Trecho: ");
-            text1.getSnippetOfDocument(node.getKey(), node.getValue());
+        for(HashTable.HashNode<Document, HashTable<Integer, Integer>> documentNode : teste1.nodeSet()){
+            System.out.println("Plagios encontrados no documento: " + documentNode.getKey().getNameOfDocument() + ": ");
+            System.out.println();
+            Document currentDocument = documentNode.getKey();
+            for(HashTable.HashNode<Integer, Integer> node : documentNode.getValue().nodeSet()){
+                System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
+                System.out.print("Trecho: ");
+                currentDocument.getSnippetOfDocument(node.getKey(), node.getValue());
+            }
+            System.out.println();
+
         }
 
     }

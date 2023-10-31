@@ -28,6 +28,10 @@ public class Document {
         System.out.println();
     }
 
+    public int getLength(){
+        return length;
+    }
+
     public void printAllWords(){
         for(String word : wordsOfDocument){
             System.out.println(word);
