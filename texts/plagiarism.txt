@@ -1,1 +1,2 @@
 No vasto mundo da ciência da computação, algoritmos eficientes e estruturas de dados são fundamentais para resolver problemas complexos. Uma dessas estruturas, conhecida como hashtable, é um mecanismo poderoso e versátil amplamente utilizado para armazenar e recuperar dados de forma eficiente. Neste texto, vamos explorar o conceito, a implementação e a importância das hashtables no campo da ciência da computação.
+

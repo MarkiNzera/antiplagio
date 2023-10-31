@@ -23,6 +23,13 @@ public class Document {
         return nameOfDocument;
     }
 
+    public void getSnippetOfDocument(int init, int end){
+        for(int i = init; i < end; i++){
+            System.out.printf(contentOfDocument.charAt(i) + "");
+        }
+        System.out.println();
+    }
+
     public void printAllWords(){
         for(String word : contentOfDocument.split(" ")){
             System.out.println(word);

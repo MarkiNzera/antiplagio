@@ -21,16 +21,18 @@ public class Main{
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
         Document plagiarismText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
-        PlagiarismChecker2 plagiarismChecker = new PlagiarismChecker2();
+        PlagiarismChecker1 plagiarismChecker = new PlagiarismChecker1();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        HashTable<Integer, Integer> teste1 = plagiarismChecker.findSubstrings(text1.getContentOfDocument(), plagiarismText.getContentOfDocument());
+        HashTable<Integer, Integer> teste1 = plagiarismChecker.checkPlagiarism(text1.getContentOfDocument(), plagiarismText.getContentOfDocument(), 200);
         HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
 
         for(HashTable.HashNode<Integer, Integer> node : teste1.nodeSet()){
             System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
+            System.out.println("Trecho: ");
+            text1.getSnippetOfDocument(node.getKey(), node.getValue());
         }
 
     }
