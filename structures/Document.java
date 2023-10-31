@@ -4,20 +4,18 @@ import java.util.StringTokenizer;
 public class Document {
     private final String nameOfDocument;
     private final String contentOfDocument;
+    private final String[] wordsOfDocument;
+    private final int length;
 
-    private int length;
 
     public Document(String name, String words){
         nameOfDocument = name;
         contentOfDocument = preprocess(words);
+        wordsOfDocument = getWordsOfDocument();
         length = contentOfDocument.length();
     }
 
     public String getContentOfDocument(){ return contentOfDocument;}
-
-    public String[] getWordsOfDocument(){
-        return contentOfDocument.split(" ");
-    }
 
     public String getNameOfDocument(){
         return nameOfDocument;
@@ -31,9 +29,13 @@ public class Document {
     }
 
     public void printAllWords(){
-        for(String word : contentOfDocument.split(" ")){
+        for(String word : wordsOfDocument){
             System.out.println(word);
         }
+    }
+
+    private String[] getWordsOfDocument(){
+        return contentOfDocument.split(" ");
     }
 
     private String preprocess(String words){

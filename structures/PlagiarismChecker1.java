@@ -13,6 +13,41 @@ public class PlagiarismChecker1 {
     }
 
     public HashTable<Integer, Integer> checkPlagiarism(String text, String plagiarism, int m){
+        int textLength = text.length();
+        int plagiarismLength = plagiarism.length();
+
+        if(plagiarismLength < m){
+            m = plagiarismLength;
+        }
+
+        HashTable<Integer, Integer> occurrences = new HashTable<>();
+        HashTable<Integer, String> patternHashes = new HashTable<>();
+
+        for(int i = 0; i < plagiarismLength - m; i += m){
+            String substring = plagiarism.substring(i, i + m);
+            int patternHash = substring.hashCode();
+            patternHashes.put(patternHash, substring);
+        }
+
+        for(HashTable.HashNode<Integer, String> hash : patternHashes.nodeSet()){
+            String patternText = hash.getValue();
+            int patternHash = hash.getKey();
+            int patternLength = patternText.length();
+
+            for(int i = 0; i <= textLength - plagiarismLength; i++){
+                String subText = text.substring(i, i + patternLength);
+                int subTextHash = subText.hashCode();
+
+                if(patternHash == subTextHash && patternText.equals(subText)){
+                    occurrences.put(i, i + patternLength - 1);
+                }
+            }
+        }
+
+        return occurrences;
+    }
+
+    public HashTable<Integer, Integer> checkPlagiarism1(String text, String plagiarism, int m){
         HashTable<Integer, Integer> patternHashes = new HashTable<>();
 
         int textLength = text.length();
