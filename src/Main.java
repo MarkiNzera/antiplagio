@@ -1,13 +1,10 @@
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
         testPlagiarismChecker();
+
     }
 
 //    public static void testFullAplication(){
@@ -24,13 +21,17 @@ public class Main{
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
         Document plagiarismText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
-        PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
+        PlagiarismChecker2 plagiarismChecker = new PlagiarismChecker2();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        System.out.println(plagiarismChecker.search(text1.getContentOfDocument(), plagiarismText.getContentOfDocument()));
-        System.out.println(plagiarismChecker.search("abcdef", "def"));
+        HashTable<Integer, Integer> teste1 = plagiarismChecker.findSubstrings(text1.getContentOfDocument(), plagiarismText.getContentOfDocument());
+        HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
+
+        for(HashTable.HashNode<Integer, Integer> node : teste1.nodeSet()){
+            System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
+        }
 
     }
 
@@ -55,6 +56,11 @@ public class Main{
         ArrayList<String> valuesForKeyAgenor = hashTable.findAll("Agenor");
         for(String value : valuesForKeyAgenor){
             System.out.printf(value + " ");
+        }
+
+        System.out.println();
+        for(HashTable.HashNode<String, String> node : hashTable.nodeSet()){
+            System.out.println("chave: " + node.getKey() + ", valor: " + node.getValue());
         }
     }
 }

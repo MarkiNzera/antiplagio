@@ -125,4 +125,16 @@ public class HashTable<K, V>{
 
         return temp;
     }
+
+    public ArrayList<HashNode<K, V>> nodeSet(){
+        ArrayList<HashNode<K, V>> set = new ArrayList<>();
+
+        for(LinkedList<HashNode<K, V>> nodes : table){
+            if(nodes != null){
+                set.addAll(nodes);
+            }
+        }
+
+        return set;
+    }
 }
