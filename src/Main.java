@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
-//        testPlagiarismChecker();
-        avlTreeTest();
+        testPlagiarismChecker();
+//        avlTreeTest();
     }
 
 //    public static void testFullAplication(){
@@ -21,12 +21,15 @@ public class Main{
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
         Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
-        HashPlagiarismChecker plagiarismChecker = new HashPlagiarismChecker();
+        PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        HashTable<Document, HashTable<Integer, Integer>> teste1 = plagiarismChecker.checkPlagiarismInAllDocuments(plagiarizedText, 176);
+        HashTable<Document, PlagiarismStrategy<Integer, Integer>> strategyHash = new HashTable<>();
+        HashTable<Document, PlagiarismStrategy<Integer, Integer>> strategyTree = new HashTable<>();
+
+        HashTable<Document, HashTable<Integer, Integer>> teste1 = (HashTable) plagiarismChecker.checkPlagiarism(plagiarizedText, 176, strategyTree);
         // HashTable<Integer, Integer> teste2 = plagiarismChecker.findSubstrings("abcdef", "def");
 
         for(HashTable.HashNode<Document, HashTable<Integer, Integer>> documentNode : teste1.nodeSet()){
@@ -51,18 +54,18 @@ public class Main{
     }
 
     public static void avlTreeTest(){
-        AvlTree<Integer> avlTree = new AvlTree<>();
+        AvlTree<Integer, Integer> avlTree = new AvlTree<>();
 
-        avlTree.insert(3);
-        avlTree.insert(2);
-        avlTree.insert(1);
-        avlTree.insert(4);
-        avlTree.insert(5);
-        avlTree.insert(6);
-        avlTree.insert(7);
-        avlTree.insert(16);
-        avlTree.insert(15);
-        avlTree.insert(14);
+        avlTree.put(3, 3);
+        avlTree.put(2, 2);
+        avlTree.put(1, 1);
+        avlTree.put(4, 4);
+        avlTree.put(5, 5);
+        avlTree.put(6, 6);
+        avlTree.put(7, 7);
+        avlTree.put(16, 16);
+        avlTree.put(15, 15);
+        avlTree.put(14, 14);
 
         avlTree.inOrder();
 

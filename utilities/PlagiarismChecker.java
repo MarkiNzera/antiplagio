@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class HashPlagiarismChecker {
+public class PlagiarismChecker {
     private ArrayList<Document> documents;
 
-    public HashPlagiarismChecker(){
+    public PlagiarismChecker(){
         documents = new ArrayList<>();
     }
 
@@ -11,10 +11,11 @@ public class HashPlagiarismChecker {
         documents.add(newDocument);
     }
 
-    public HashTable<Document, HashTable<Integer, Integer>> checkPlagiarismInAllDocuments(Document plagiarizedDocument, int m){
-        HashTable<Document, HashTable<Integer, Integer>> occurrencesInAllDocuments = new HashTable<>();
+    public PlagiarismStrategy<Document, PlagiarismStrategy<Integer, Integer>> checkPlagiarism(Document plagiarizedDocument, int m, PlagiarismStrategy<Document, PlagiarismStrategy<Integer, Integer>> plagiarismStrategy){
+        PlagiarismStrategy<Document, PlagiarismStrategy<Integer, Integer>> occurrencesInAllDocuments = plagiarismStrategy;
+
         for(Document document : documents){
-            HashTable<Integer, Integer> occurrences = checkPlagiarism(document.getContentOfDocument(),
+            PlagiarismStrategy<Integer, Integer> occurrences = checkPlagiarismInOneDocument(document.getContentOfDocument(),
                     plagiarizedDocument.getContentOfDocument(), m);
 
             occurrencesInAllDocuments.put(document, occurrences);
@@ -23,7 +24,7 @@ public class HashPlagiarismChecker {
         return occurrencesInAllDocuments;
     }
 
-    public HashTable<Integer, Integer> checkPlagiarism(String checkingText, String plagiarizedText, int m){
+    private HashTable<Integer, Integer> checkPlagiarismInOneDocument(String checkingText, String plagiarizedText, int m){
         int textLength = checkingText.length();
         int plagiarismLength = plagiarizedText.length();
 
@@ -40,7 +41,7 @@ public class HashPlagiarismChecker {
             int patternHash = hash.getKey();
             int patternLength = patternText.length();
 
-            for(int i = 0; i <= textLength - patternLength; i += 1){
+            for(int i = 0; i <= textLength - patternLength; i += m){
                 String subText = checkingText.substring(i, i + patternLength);
                 int subTextHash = subText.hashCode();
 
