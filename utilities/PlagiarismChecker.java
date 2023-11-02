@@ -15,8 +15,8 @@ public class PlagiarismChecker {
         PlagiarismStrategy<Document, PlagiarismStrategy<Integer, Integer>> occurrencesInAllDocuments = plagiarismStrategy;
 
         for(Document document : documents){
-            PlagiarismStrategy<Integer, Integer> occurrences = checkPlagiarismInOneDocument(document.getContentOfDocument(),
-                    plagiarizedDocument.getContentOfDocument(), m);
+            PlagiarismStrategy<Integer, Integer> occurrences = checkPlagiarismInOneDocument(document,
+                    plagiarizedDocument, m);
 
             occurrencesInAllDocuments.put(document, occurrences);
         }
@@ -24,25 +24,31 @@ public class PlagiarismChecker {
         return occurrencesInAllDocuments;
     }
 
-    private HashTable<Integer, Integer> checkPlagiarismInOneDocument(String checkingText, String plagiarizedText, int m){
-        int textLength = checkingText.length();
-        int plagiarismLength = plagiarizedText.length();
+    private HashTable<Integer, Integer> checkPlagiarismInOneDocument(Document checkingDocument, Document plagiarizedDocument, int m){
+        int textLength = checkingDocument.getLength();
+        int plagiarismLength = plagiarizedDocument.getLength();
 
         if(plagiarismLength < m){
             m = plagiarismLength;
         }
 
-        HashTable<Integer, String> patternHashes = findPatternHashes(plagiarizedText, plagiarismLength, m);
+        HashTable<Integer, String> patternHashes = findPatternHashes(plagiarizedDocument, m);
 
+
+        return findAllOccurrences(patternHashes, checkingDocument, m);
+    }
+
+    private HashTable<Integer, Integer> findAllOccurrences(HashTable<Integer, String> patternHashes, Document checkingDocument, int m){
         HashTable<Integer, Integer> occurrences = new HashTable<>();
+        String contentOfCheckingDocument = checkingDocument.getContentOfDocument();
 
         for(HashTable.HashNode<Integer, String> hash : patternHashes.nodeSet()){
             String patternText = hash.getValue();
             int patternHash = hash.getKey();
             int patternLength = patternText.length();
 
-            for(int i = 0; i <= textLength - patternLength; i += m){
-                String subText = checkingText.substring(i, i + patternLength);
+            for(int i = 0; i <= checkingDocument.getLength() - patternLength; i += m){
+                String subText = contentOfCheckingDocument.substring(i, i + patternLength);
                 int subTextHash = subText.hashCode();
 
                 if(patternHash == subTextHash && patternText.equals(subText)){
@@ -54,10 +60,12 @@ public class PlagiarismChecker {
         return occurrences;
     }
 
-    private HashTable<Integer, String> findPatternHashes(String plagiarism, int plagiarismLength, int m){
+    private HashTable<Integer, String> findPatternHashes(Document plagiarizedDocument, int m){
         HashTable<Integer, String> patternHashes = new HashTable<>();
-        for(int i = 0; i < plagiarismLength - m; i++){
-            String substring = plagiarism.substring(i, i + m);
+        String contentOfPlagiarizedDocument = plagiarizedDocument.getContentOfDocument();
+
+        for(int i = 0; i < plagiarizedDocument.getLength() - m; i++){
+            String substring = contentOfPlagiarizedDocument.substring(i, i + m);
             int patternHash = substring.hashCode();
             patternHashes.put(patternHash, substring);
         }
