@@ -219,22 +219,6 @@ public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K
         return y;
     }
 
-    public ArrayList<NodeStrategy<K, V>> nodeSet(){
-        ArrayList<NodeStrategy<K, V>> set = new ArrayList<>();
-
-        inOrderNodeSet(root, set);
-
-        return set;
-    }
-
-    private void inOrderNodeSet(AvlNode<K, V> node, ArrayList<NodeStrategy<K, V>> set){
-        if(node != null){
-            inOrderNodeSet(node.left, set);
-            set.add(node);
-            inOrderNodeSet(node.right, set);
-        }
-    }
-
     public ArrayList<V> findAllK(K key) {
         ArrayList<V> values = new ArrayList<>();
         findAllK(root, key, values);
@@ -258,4 +242,22 @@ public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K
         }
     }
 
+    public boolean contains(K key) {
+        return contains(root, key);
+    }
+
+    private boolean contains(AvlNode<K, V> node, K key) {
+        if (node == null) {
+            return false;
+        }
+
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            return contains(node.left, key);
+        } else if (cmp > 0) {
+            return contains(node.right, key);
+        } else {
+            return true;
+        }
+    }
 }

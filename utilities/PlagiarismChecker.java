@@ -39,24 +39,19 @@ public class PlagiarismChecker {
         return plagiarismStrategy;
     }
 
-    private ArrayList<Integer> findAllOccurrences(PlagiarismStrategy<Integer, String> plagiarizedDocument, Document checkingDocument, int m){
+    private ArrayList<Integer> findAllOccurrences(PlagiarismStrategy<Integer, String> plagiarizedDocumentHashes, Document checkingDocument, int m){
         ArrayList<Integer> occurrences = new ArrayList<>();
         String contentOfCheckingDocument = checkingDocument.getContentOfDocument();
 
-        for(NodeStrategy<Integer, String> node : plagiarizedDocument.nodeSet()){
-            String patternText = node.getValue();
-            int patternHash = node.getKey();
-            int patternLength = patternText.length();
+        for(int i = 0; i <= checkingDocument.getLength() - m; i += m){
+            String subText = contentOfCheckingDocument.substring(i, i + m);
+            int subTextHash = subText.hashCode();
 
-            for(int i = 0; i <= checkingDocument.getLength() - patternLength; i += m){
-                String subText = contentOfCheckingDocument.substring(i, i + patternLength);
-                int subTextHash = subText.hashCode();
-
-                if(patternHash == subTextHash && patternText.equals(subText)){
-                    occurrences.add(i);
-                }
+            if(plagiarizedDocumentHashes.contains(subTextHash) && plagiarizedDocumentHashes.get(subTextHash).equals(subText)){
+                occurrences.add(i);
             }
         }
+
 
         return occurrences;
     }

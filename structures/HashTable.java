@@ -112,7 +112,6 @@ public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
                 return;
             }
         }
-
     }
 
     public ArrayList<V> findAllK(K key){
@@ -126,15 +125,4 @@ public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
         return temp;
     }
 
-    public ArrayList<NodeStrategy<K, V>> nodeSet(){
-        ArrayList<NodeStrategy<K, V>> set = new ArrayList<>();
-
-        for(LinkedList<HashNode<K, V>> nodes : table){
-            if(nodes != null){
-                set.addAll(nodes);
-            }
-        }
-
-        return set;
-    }
 }

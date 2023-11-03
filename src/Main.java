@@ -101,10 +101,5 @@ public class Main{
         for(String value : valuesForKeyAgenor){
             System.out.printf(value + " ");
         }
-
-        System.out.println();
-        for(NodeStrategy<String, String> node : hashTable.nodeSet()){
-            System.out.println("chave: " + node.getKey() + ", valor: " + node.getValue());
-        }
     }
 }
