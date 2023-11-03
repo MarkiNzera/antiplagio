@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class Document {
+public class Document implements Comparable<Document>{
     private final String nameOfDocument;
     private final String contentOfDocument;
     private final String[] wordsOfDocument;
@@ -52,6 +52,11 @@ public class Document {
         }
 
         return tokens.toString();
+    }
+
+    @Override
+    public int compareTo(Document other){
+        return getContentOfDocument().compareTo(other.getContentOfDocument());
     }
 
 }
