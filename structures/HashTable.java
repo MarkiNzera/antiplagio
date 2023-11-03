@@ -115,7 +115,7 @@ public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
 
     }
 
-    public ArrayList<V> findAll(K key){
+    public ArrayList<V> findAllK(K key){
         int index = hashFunction(key);
 
         ArrayList<V> temp = new ArrayList<>();

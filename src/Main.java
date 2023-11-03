@@ -42,7 +42,7 @@ public class Main{
             System.out.println();
             Document currentDocument = pair.getKey();
             for(Integer node : pair.getValue()){
-                int init = node, end = init + 176;
+                int init = node, end = init + m;
                 System.out.println("Início: " + init + ", Fim: " + end);
                 System.out.print("Trecho: ");
                 currentDocument.getSnippetOfDocument(init, end);
@@ -62,6 +62,8 @@ public class Main{
         AvlTree<Integer, Integer> avlTree = new AvlTree<>();
 
         avlTree.put(3, 3);
+        avlTree.put(3, 7);
+        avlTree.put(3, 8);
         avlTree.put(2, 2);
         avlTree.put(1, 1);
         avlTree.put(4, 4);
@@ -73,6 +75,13 @@ public class Main{
         avlTree.put(14, 14);
 
         avlTree.inOrder();
+
+        System.out.println();
+        ArrayList<Integer> valuesForKeyAgenor = avlTree.findAllK(3);
+        for(Integer value : valuesForKeyAgenor){
+            System.out.printf(value + " ");
+        }
+
 
     }
 
@@ -88,7 +97,7 @@ public class Main{
 
         System.out.println(hashTable.get("Agenor"));
 
-        ArrayList<String> valuesForKeyAgenor = hashTable.findAll("Agenor");
+        ArrayList<String> valuesForKeyAgenor = hashTable.findAllK("Agenor");
         for(String value : valuesForKeyAgenor){
             System.out.printf(value + " ");
         }

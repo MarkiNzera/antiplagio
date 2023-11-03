@@ -235,4 +235,27 @@ public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K
         }
     }
 
+    public ArrayList<V> findAllK(K key) {
+        ArrayList<V> values = new ArrayList<>();
+        findAllK(root, key, values);
+        return values;
+    }
+
+    private void findAllK(AvlNode<K, V> node, K key, ArrayList<V> values) {
+        if (node == null) {
+            return;
+        }
+
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            findAllK(node.left, key, values);
+        } else if (cmp > 0) {
+            findAllK(node.right, key, values);
+        } else {
+            values.add(node.value);
+            findAllK(node.left, key, values);
+            findAllK(node.right, key, values);
+        }
+    }
+
 }
