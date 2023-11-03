@@ -1,6 +1,11 @@
+import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K, V>{
 
-    public static class AvlNode<K extends Comparable<K>, V> {
+    public static class AvlNode<K extends Comparable<K>, V> implements NodeStrategy<K, V> {
         private K key;
         private V value;
         private int height;
@@ -212,6 +217,22 @@ public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K
         y.height = 1 + Math.max(height(y.left), height(y.right));
 
         return y;
+    }
+
+    public ArrayList<NodeStrategy<K, V>> nodeSet(){
+        ArrayList<NodeStrategy<K, V>> set = new ArrayList<>();
+
+        inOrderNodeSet(root, set);
+
+        return set;
+    }
+
+    private void inOrderNodeSet(AvlNode<K, V> node, ArrayList<NodeStrategy<K, V>> set){
+        if(node != null){
+            inOrderNodeSet(node.left, set);
+            set.add(node);
+            inOrderNodeSet(node.right, set);
+        }
     }
 
 }

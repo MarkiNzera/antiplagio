@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
-    public static class HashNode<K, V>{
+    public static class HashNode<K, V> implements NodeStrategy<K, V>{
         private final K key;
         private V value;
         public HashNode(K key, V value) {
@@ -126,8 +126,8 @@ public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
         return temp;
     }
 
-    public ArrayList<HashNode<K, V>> nodeSet(){
-        ArrayList<HashNode<K, V>> set = new ArrayList<>();
+    public ArrayList<NodeStrategy<K, V>> nodeSet(){
+        ArrayList<NodeStrategy<K, V>> set = new ArrayList<>();
 
         for(LinkedList<HashNode<K, V>> nodes : table){
             if(nodes != null){
