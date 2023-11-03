@@ -3,11 +3,11 @@ import java.util.ArrayList;
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
-        testPlagiarismChecker2();
+        testPlagiarismChecker();
 //        avlTreeTest();
     }
 
-    public static void testPlagiarismChecker2(){
+    public static void testPlagiarismChecker(){
         Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
         Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
         Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
@@ -17,56 +17,40 @@ public class Main{
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        HashTable<Integer, Integer> hashTable = new HashTable<>();
-        AvlTree<Integer, Integer> avlTree = new AvlTree<>();
+        int m = 176;
 
-        Pairs<Document, PlagiarismStrategy<Integer, Integer>> teste1 = plagiarismChecker.checkPlagiarism(plagiarizedText, 176, hashTable);
+        HashTable<Integer, String> hashTable = new HashTable<>();
+        AvlTree<Integer, String> avlTree = new AvlTree<>();
 
-        for(Pairs.Pair<Document, PlagiarismStrategy<Integer, Integer>> pair : teste1.pairs){
+        Pairs<Document, ArrayList<Integer>> testeArvore = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
+        Pairs<Document, ArrayList<Integer>> testeHashTable = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
+
+        System.out.println("Buscando plagios usando Arvores AVL");
+        printPlagiarizedTexts(testeArvore, m);
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println("Buscando plagios usando Hash Tables");
+        printPlagiarizedTexts(testeHashTable, m);
+
+    }
+
+    public static void printPlagiarizedTexts(Pairs<Document, ArrayList<Integer>> pairs, int m){
+        for(Pairs.Pair<Document, ArrayList<Integer>> pair : pairs.pairs){
             System.out.println("Plagios encontrados no documento: " + pair.getKey().getNameOfDocument() + ": ");
             System.out.println();
             Document currentDocument = pair.getKey();
-            for(NodeStrategy<Integer, Integer> node : pair.getValue().nodeSet()){
-                System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
+            for(Integer node : pair.getValue()){
+                int init = node, end = init + 176;
+                System.out.println("Início: " + init + ", Fim: " + end);
                 System.out.print("Trecho: ");
-                currentDocument.getSnippetOfDocument(node.getKey(), node.getValue());
+                currentDocument.getSnippetOfDocument(init, end);
             }
             System.out.println();
 
         }
-
     }
-
-//    public static void testPlagiarismChecker(){
-//        Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
-//        Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
-//        Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
-//
-//        PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
-//
-//        plagiarismChecker.addDocument(text1);
-//        plagiarismChecker.addDocument(text2);
-//
-//        HashTable<Document, PlagiarismStrategy<Integer, Integer>> strategyHash = new HashTable<>();
-//        AvlTree<Document, PlagiarismStrategy<Integer, Integer>> strategyTree = new AvlTree<>();
-//
-//        // HashTable<Document, HashTable<Integer, Integer>> teste1 = (HashTable) plagiarismChecker.checkPlagiarism(plagiarizedText, 176, strategyHash);
-//        AvlTree<Document, AvlTree<Integer, Integer>> teste2 = (AvlTree) plagiarismChecker.checkPlagiarism(plagiarizedText, 176, strategyTree);
-//
-//        for(NodeStrategy<Document, PlagiarismStrategy<Integer, Integer>> documentNode : teste2.nodeSet()){
-//            System.out.println("Plagios encontrados no documento: " + documentNode.getKey().getNameOfDocument() + ": ");
-//            System.out.println();
-//            Document currentDocument = documentNode.getKey();
-//            for(HashTable.HashNode<Integer, Integer> node : documentNode.getValue().nodeSet()){
-//                System.out.println("Início: " + node.getKey() + ", Fim: " + node.getValue());
-//                System.out.print("Trecho: ");
-//                currentDocument.getSnippetOfDocument(node.getKey(), node.getValue());
-//            }
-//            System.out.println();
-//
-//        }
-//
-//    }
 
     public static void testDocumentReader(){
         Document document = DocumentReader.read("texto sobre hash", "texts/text1.txt");
