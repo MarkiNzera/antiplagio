@@ -6,12 +6,6 @@ public class Main{
 //        testDocumentReader();
 //        avlTreeTest();
         testPlagiarismChecker();
-//        String teste = "Grafos são estruturas matemáticas fundamentais que desempenham um papel crucial em várias áreas da ciência da computação,\n" +
-//                "matemática discreta e engenharia de redes. Eles são utilizados para modelar uma variedade de problemas do mundo real, desde\n" +
-//                "redes de computadores até sistemas de transporte e relações sociais.";
-//        String[] teste2 = teste.split(" ");
-//
-//        System.out.println(teste2.length);
     }
 
     public static void testPlagiarismChecker(){
@@ -36,19 +30,33 @@ public class Main{
 
         HashTable<Integer, List<String>> hashTable = new HashTable<>();
         AvlTree<Integer, List<String>> avlTree = new AvlTree<>();
+        long startTime, endTime;
+        startTime = System.currentTimeMillis();
+        Pairs<Document, ArrayList<Integer>> occurrencesTree = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
+        endTime = System.currentTimeMillis();
 
-        Pairs<Document, ArrayList<Integer>> testeArvore = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
-        Pairs<Document, ArrayList<Integer>> testeHashTable = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
+        long timeTree = endTime - startTime;
+
+        startTime = System.currentTimeMillis();
+        Pairs<Document, ArrayList<Integer>> occurrencesHash = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
+        endTime = System.currentTimeMillis();
+
+        long timeHash = endTime - startTime;
 
         System.out.println("Buscando plagios usando Arvores AVL");
-        printPlagiarizedTexts(testeArvore, m);
+        printPlagiarizedTexts(occurrencesTree, m);
 
         System.out.println();
         System.out.println();
 
         System.out.println("Buscando plagios usando Hash Tables");
-        printPlagiarizedTexts(testeHashTable, m);
+        printPlagiarizedTexts(occurrencesHash, m);
 
+        System.out.println("Tempo para buscar plagio nos documentos usando Arvore AVL: " + (timeTree) + " ms");
+        System.out.println();
+
+        System.out.println("Tempo para buscar plagio nos documentos usando Hash Table: " + (timeHash) + " ms");
+        System.out.println();
     }
 
     public static void printPlagiarizedTexts(Pairs<Document, ArrayList<Integer>> pairs, int m){
@@ -104,15 +112,16 @@ public class Main{
         HashTable<String, String> hashTable = new HashTable<>();
 
 
-        hashTable.put("Agenor", "Fodase");
-        hashTable.put("Agenor", "Fodase2");
-        hashTable.remove("Pedro");
+        hashTable.put("Chave1", "Valor");
+        hashTable.put("Chave1", "Valor2");
+        hashTable.put("Chave2", "Valor2");
+        hashTable.remove("Chave2");
 
 
 
-        System.out.println(hashTable.get("Agenor"));
+        System.out.println(hashTable.get("Chave1"));
 
-        ArrayList<String> valuesForKeyAgenor = hashTable.findAllK("Agenor");
+        ArrayList<String> valuesForKeyAgenor = hashTable.findAllK("Chave1");
         for(String value : valuesForKeyAgenor){
             System.out.printf(value + " ");
         }
