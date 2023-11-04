@@ -1,9 +1,6 @@
-import org.w3c.dom.Node;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-public class AvlTree<K extends Comparable<K>, V> implements PlagiarismStrategy<K, V>{
+public class AvlTree<K extends Comparable<K>, V> implements MultiMap<K, V> {
 
     public static class AvlNode<K extends Comparable<K>, V> implements NodeStrategy<K, V> {
         private K key;

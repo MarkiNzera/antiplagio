@@ -6,17 +6,31 @@ public class Main{
 //        testDocumentReader();
 //        avlTreeTest();
         testPlagiarismChecker();
+//        String teste = "Grafos são estruturas matemáticas fundamentais que desempenham um papel crucial em várias áreas da ciência da computação,\n" +
+//                "matemática discreta e engenharia de redes. Eles são utilizados para modelar uma variedade de problemas do mundo real, desde\n" +
+//                "redes de computadores até sistemas de transporte e relações sociais.";
+//        String[] teste2 = teste.split(" ");
+//
+//        System.out.println(teste2.length);
     }
 
     public static void testPlagiarismChecker(){
-        Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
-        Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
+        Document text1 = DocumentReader.read("documento sobre hash", "texts/avlText.txt");
+        Document text2 = DocumentReader.read("documento sobre arvore", "texts/hashText.txt");
+        Document text3 = DocumentReader.read("documento sobre listas ligadas", "texts/linkedListText.txt");
+        Document text4 = DocumentReader.read("documento sobre fila", "texts/queueText.txt");
+        Document text5 = DocumentReader.read("documento sobre pilha", "texts/stackText.txt");
+        Document text6 = DocumentReader.read("documento sobre grafo", "texts/graphText.txt");
         Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
         PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
+        plagiarismChecker.addDocument(text3);
+        plagiarismChecker.addDocument(text4);
+        plagiarismChecker.addDocument(text5);
+        plagiarismChecker.addDocument(text6);
 
         int m = 26;
 
@@ -54,7 +68,7 @@ public class Main{
     }
 
     public static void testDocumentReader(){
-        Document document = DocumentReader.read("texto sobre hash", "texts/text1.txt");
+        Document document = DocumentReader.read("texto sobre hash", "texts/hashText .txt");
 
         document.printAllWords();
     }

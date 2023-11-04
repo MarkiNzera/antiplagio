@@ -13,10 +13,10 @@ public class PlagiarismChecker {
     }
 
 
-    public Pairs<Document, ArrayList<Integer>> checkPlagiarism(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, List<String>> plagiarismStrategy){
+    public Pairs<Document, ArrayList<Integer>> checkPlagiarism(Document plagiarizedDocument, int m, MultiMap<Integer, List<String>> multiMap){
         Pairs<Document, ArrayList<Integer>> occurrencesInAllDocuments = new Pairs<>();
 
-        PlagiarismStrategy<Integer, List<String>> plagiarizedDocumentHashes = findPlagiarizedHashes(plagiarizedDocument, m, plagiarismStrategy);
+        MultiMap<Integer, List<String>> plagiarizedDocumentHashes = findPlagiarizedHashes(plagiarizedDocument, m, multiMap);
 
         for(Document document : documents){
             ArrayList<Integer> occurrences = findAllOccurrencesInOneDocument(plagiarizedDocumentHashes,
@@ -29,23 +29,23 @@ public class PlagiarismChecker {
         return occurrencesInAllDocuments;
     }
 
-    private PlagiarismStrategy<Integer, List<String>> findPlagiarizedHashes(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, List<String>> plagiarismStrategy){
+    private MultiMap<Integer, List<String>> findPlagiarizedHashes(Document plagiarizedDocument, int m, MultiMap<Integer, List<String>> multiMap){
         List<String> wordsOfPlagiarizedDocument = plagiarizedDocument.getWordsOfDocument();
 
         for(int i = 0; i < plagiarizedDocument.getNumOfWords() - m; i++){
             List<String> subWord = wordsOfPlagiarizedDocument.subList(i, i + m);
             int patternHash = subWord.hashCode();
-            plagiarismStrategy.put(patternHash, subWord);
+            multiMap.put(patternHash, subWord);
         }
 
-        return plagiarismStrategy;
+        return multiMap;
     }
 
-    private ArrayList<Integer> findAllOccurrencesInOneDocument(PlagiarismStrategy<Integer, List<String>> plagiarizedDocumentHashes, Document checkingDocument, int m){
+    private ArrayList<Integer> findAllOccurrencesInOneDocument(MultiMap<Integer, List<String>> plagiarizedDocumentHashes, Document checkingDocument, int m){
         ArrayList<Integer> occurrences = new ArrayList<>();
         List<String> contentOfCheckingDocument = checkingDocument.getWordsOfDocument();
 
-        for(int i = 0; i <= checkingDocument.getNumOfWords() - m; i += 10){
+        for(int i = 0; i <= checkingDocument.getNumOfWords() - m; i += 20){
             List<String> subWord = contentOfCheckingDocument.subList(i, i + m);
             int subWordHash = subWord.hashCode();
 
