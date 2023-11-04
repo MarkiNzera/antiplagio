@@ -1,4 +1,3 @@
-Introdução
 No vasto mundo da ciência da computação, algoritmos eficientes e estruturas de dados são fundamentais para resolver problemas complexos. Uma dessas estruturas, conhecida como hashtable, é um mecanismo poderoso e versátil amplamente utilizado para armazenar e recuperar dados de forma eficiente. Neste texto, vamos explorar o conceito, a implementação e a importância das hashtables no campo da ciência da computação.
 O que é uma Hashtable
 Uma hashtable, também chamada de tabela de dispersão, é uma estrutura de dados que permite o armazenamento e a recuperação rápida de dados. Ela funciona associando chaves únicas a valores dentro de uma tabela, onde uma função especial chamada de função de hash é usada para calcular a posição onde cada elemento deve ser armazenado ou procurado. Esta abordagem permite um acesso rápido e eficiente aos dados, tornando as hashtables ideais para lidar com grandes volumes de informações.

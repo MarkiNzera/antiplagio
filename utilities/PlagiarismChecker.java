@@ -45,7 +45,7 @@ public class PlagiarismChecker {
         ArrayList<Integer> occurrences = new ArrayList<>();
         List<String> contentOfCheckingDocument = checkingDocument.getWordsOfDocument();
 
-        for(int i = 0; i <= checkingDocument.getNumOfWords() - m; i ++){
+        for(int i = 0; i <= checkingDocument.getNumOfWords() - m; i += 10){
             List<String> subWord = contentOfCheckingDocument.subList(i, i + m);
             int subWordHash = subWord.hashCode();
 
