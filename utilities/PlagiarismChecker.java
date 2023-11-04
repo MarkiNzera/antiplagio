@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlagiarismChecker {
     private ArrayList<Document> documents;
@@ -11,13 +12,14 @@ public class PlagiarismChecker {
         documents.add(newDocument);
     }
 
-    public Pairs<Document, ArrayList<Integer>> checkPlagiarism(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, String> plagiarismStrategy){
+
+    public Pairs<Document, ArrayList<Integer>> checkPlagiarism(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, List<String>> plagiarismStrategy){
         Pairs<Document, ArrayList<Integer>> occurrencesInAllDocuments = new Pairs<>();
 
-        PlagiarismStrategy<Integer, String> plagiarizedDocumentHashes = findPatternHashes(plagiarizedDocument, m, plagiarismStrategy);
+        PlagiarismStrategy<Integer, List<String>> plagiarizedDocumentHashes = findPlagiarizedHashes(plagiarizedDocument, m, plagiarismStrategy);
 
         for(Document document : documents){
-            ArrayList<Integer> occurrences = findAllOccurrences(plagiarizedDocumentHashes,
+            ArrayList<Integer> occurrences = findAllOccurrencesInOneDocument(plagiarizedDocumentHashes,
                     document, m);
 
             occurrencesInAllDocuments.put(document, occurrences);
@@ -27,31 +29,30 @@ public class PlagiarismChecker {
         return occurrencesInAllDocuments;
     }
 
-    private PlagiarismStrategy<Integer, String> findPatternHashes(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, String> plagiarismStrategy){
-        String contentOfPlagiarizedDocument = plagiarizedDocument.getContentOfDocument();
+    private PlagiarismStrategy<Integer, List<String>> findPlagiarizedHashes(Document plagiarizedDocument, int m, PlagiarismStrategy<Integer, List<String>> plagiarismStrategy){
+        List<String> wordsOfPlagiarizedDocument = plagiarizedDocument.getWordsOfDocument();
 
-        for(int i = 0; i < plagiarizedDocument.getLength() - m; i++){
-            String substring = contentOfPlagiarizedDocument.substring(i, i + m);
-            int patternHash = substring.hashCode();
-            plagiarismStrategy.put(patternHash, substring);
+        for(int i = 0; i < plagiarizedDocument.getNumOfWords() - m; i++){
+            List<String> subWord = wordsOfPlagiarizedDocument.subList(i, i + m);
+            int patternHash = subWord.hashCode();
+            plagiarismStrategy.put(patternHash, subWord);
         }
 
         return plagiarismStrategy;
     }
 
-    private ArrayList<Integer> findAllOccurrences(PlagiarismStrategy<Integer, String> plagiarizedDocumentHashes, Document checkingDocument, int m){
+    private ArrayList<Integer> findAllOccurrencesInOneDocument(PlagiarismStrategy<Integer, List<String>> plagiarizedDocumentHashes, Document checkingDocument, int m){
         ArrayList<Integer> occurrences = new ArrayList<>();
-        String contentOfCheckingDocument = checkingDocument.getContentOfDocument();
+        List<String> contentOfCheckingDocument = checkingDocument.getWordsOfDocument();
 
-        for(int i = 0; i <= checkingDocument.getLength() - m; i += m){
-            String subText = contentOfCheckingDocument.substring(i, i + m);
-            int subTextHash = subText.hashCode();
+        for(int i = 0; i <= checkingDocument.getNumOfWords() - m; i ++){
+            List<String> subWord = contentOfCheckingDocument.subList(i, i + m);
+            int subWordHash = subWord.hashCode();
 
-            if(plagiarizedDocumentHashes.contains(subTextHash) && plagiarizedDocumentHashes.get(subTextHash).equals(subText)){
+            if(plagiarizedDocumentHashes.contains(subWordHash) && plagiarizedDocumentHashes.get(subWordHash).equals(subWord)){
                 occurrences.add(i);
             }
         }
-
 
         return occurrences;
     }

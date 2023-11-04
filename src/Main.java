@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
-        testPlagiarismChecker();
 //        avlTreeTest();
+        testPlagiarismChecker();
     }
 
     public static void testPlagiarismChecker(){
@@ -17,10 +18,10 @@ public class Main{
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
 
-        int m = 176;
+        int m = 26;
 
-        HashTable<Integer, String> hashTable = new HashTable<>();
-        AvlTree<Integer, String> avlTree = new AvlTree<>();
+        HashTable<Integer, List<String>> hashTable = new HashTable<>();
+        AvlTree<Integer, List<String>> avlTree = new AvlTree<>();
 
         Pairs<Document, ArrayList<Integer>> testeArvore = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
         Pairs<Document, ArrayList<Integer>> testeHashTable = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
