@@ -1,39 +1,62 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main{
     public static void main(String[] args){
 //        testDocumentReader();
-        testPlagiarismChecker();
 //        avlTreeTest();
+        testPlagiarismChecker();
     }
 
     public static void testPlagiarismChecker(){
-        Document text1 = DocumentReader.read("documento sobre hash", "texts/text1.txt");
-        Document text2 = DocumentReader.read("documento sobre arvore", "texts/text2.txt");
+        Document text1 = DocumentReader.read("documento sobre hash", "texts/avlText.txt");
+        Document text2 = DocumentReader.read("documento sobre arvore", "texts/hashText.txt");
+        Document text3 = DocumentReader.read("documento sobre listas ligadas", "texts/linkedListText.txt");
+        Document text4 = DocumentReader.read("documento sobre fila", "texts/queueText.txt");
+        Document text5 = DocumentReader.read("documento sobre pilha", "texts/stackText.txt");
+        Document text6 = DocumentReader.read("documento sobre grafo", "texts/graphText.txt");
         Document plagiarizedText = DocumentReader.read("documento plagiado", "texts/plagiarism.txt");
 
         PlagiarismChecker plagiarismChecker = new PlagiarismChecker();
 
         plagiarismChecker.addDocument(text1);
         plagiarismChecker.addDocument(text2);
+        plagiarismChecker.addDocument(text3);
+        plagiarismChecker.addDocument(text4);
+        plagiarismChecker.addDocument(text5);
+        plagiarismChecker.addDocument(text6);
 
-        int m = 176;
+        int m = 26;
 
-        HashTable<Integer, String> hashTable = new HashTable<>();
-        AvlTree<Integer, String> avlTree = new AvlTree<>();
+        HashTable<Integer, List<String>> hashTable = new HashTable<>();
+        AvlTree<Integer, List<String>> avlTree = new AvlTree<>();
+        long startTime, endTime;
+        startTime = System.currentTimeMillis();
+        Pairs<Document, ArrayList<Integer>> occurrencesTree = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
+        endTime = System.currentTimeMillis();
 
-        Pairs<Document, ArrayList<Integer>> testeArvore = plagiarismChecker.checkPlagiarism(plagiarizedText, m, avlTree);
-        Pairs<Document, ArrayList<Integer>> testeHashTable = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
+        long timeTree = endTime - startTime;
+
+        startTime = System.currentTimeMillis();
+        Pairs<Document, ArrayList<Integer>> occurrencesHash = plagiarismChecker.checkPlagiarism(plagiarizedText, m, hashTable);
+        endTime = System.currentTimeMillis();
+
+        long timeHash = endTime - startTime;
 
         System.out.println("Buscando plagios usando Arvores AVL");
-        printPlagiarizedTexts(testeArvore, m);
+        printPlagiarizedTexts(occurrencesTree, m);
 
         System.out.println();
         System.out.println();
 
         System.out.println("Buscando plagios usando Hash Tables");
-        printPlagiarizedTexts(testeHashTable, m);
+        printPlagiarizedTexts(occurrencesHash, m);
 
+        System.out.println("Tempo para buscar plagio nos documentos usando Arvore AVL: " + (timeTree) + " ms");
+        System.out.println();
+
+        System.out.println("Tempo para buscar plagio nos documentos usando Hash Table: " + (timeHash) + " ms");
+        System.out.println();
     }
 
     public static void printPlagiarizedTexts(Pairs<Document, ArrayList<Integer>> pairs, int m){
@@ -53,7 +76,7 @@ public class Main{
     }
 
     public static void testDocumentReader(){
-        Document document = DocumentReader.read("texto sobre hash", "texts/text1.txt");
+        Document document = DocumentReader.read("texto sobre hash", "texts/hashText .txt");
 
         document.printAllWords();
     }
@@ -89,15 +112,16 @@ public class Main{
         HashTable<String, String> hashTable = new HashTable<>();
 
 
-        hashTable.put("Agenor", "Fodase");
-        hashTable.put("Agenor", "Fodase2");
-        hashTable.remove("Pedro");
+        hashTable.put("Chave1", "Valor");
+        hashTable.put("Chave1", "Valor2");
+        hashTable.put("Chave2", "Valor2");
+        hashTable.remove("Chave2");
 
 
 
-        System.out.println(hashTable.get("Agenor"));
+        System.out.println(hashTable.get("Chave1"));
 
-        ArrayList<String> valuesForKeyAgenor = hashTable.findAllK("Agenor");
+        ArrayList<String> valuesForKeyAgenor = hashTable.findAllK("Chave1");
         for(String value : valuesForKeyAgenor){
             System.out.printf(value + " ");
         }

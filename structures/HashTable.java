@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class HashTable<K, V> implements PlagiarismStrategy<K, V>{
+public class HashTable<K, V> implements MultiMap<K, V> {
     public static class HashNode<K, V> implements NodeStrategy<K, V>{
         private final K key;
         private V value;

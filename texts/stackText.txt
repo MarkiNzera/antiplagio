@@ -1,0 +1,60 @@
+As estruturas de dados são elementos fundamentais da ciência da computação. Elas fornecem a base sobre a qual os
+algoritmos são construídos e desempenham um papel crucial na resolução de problemas complexos em programação. Uma das
+estruturas de dados mais fundamentais e amplamente utilizadas é a pilha. Neste artigo, mergulharemos nas profundezas da
+pilha, explorando seus conceitos, operações, aplicações e implementações. Vamos desvendar o mistério da pilha e entender
+por que ela é tão vital para a programação.
+O que é uma pilha?
+Uma pilha é uma estrutura de dados linear que segue o princípio do último a entrar, primeiro a sair (LIFO, do inglês
+Last In, First Out). Isso significa que o último elemento inserido na pilha é o primeiro a ser retirado. Para visualizar
+uma pilha, você pode imaginar uma pilha de pratos, onde você sempre coloca um novo prato no topo e retira o prato do topo
+quando desejar.
+As operações básicas que podemos realizar em uma pilha são:
+Push: Adicionar um elemento ao topo da pilha.
+Pop: Remover o elemento do topo da pilha.
+Peek (ou Top): Obter o elemento no topo da pilha sem removê-lo.
+IsEmpty: Verificar se a pilha está vazia.
+Size: Obter o número de elementos na pilha.
+Uma pilha é frequentemente representada por um array ou uma lista encadeada, onde o topo da pilha é o último elemento da estrutura de dados.
+Aplicações de Pilhas
+Pilhas desempenham um papel vital em muitos aspectos da computação e são amplamente utilizadas em uma variedade de
+aplicações. Alguns dos cenários comuns em que as pilhas são aplicadas incluem:
+Gerenciamento de chamadas de funções: As pilhas são usadas para rastrear a execução de funções em um programa. Cada vez
+que uma função é chamada, um novo registro de ativação é colocado na pilha, e quando a função retorna, esse registro é removido.
+Navegação na web: Pilhas são usadas para implementar a funcionalidade de "voltar" em navegadores da web. Cada página
+é colocada na pilha, e o usuário pode voltar para a página anterior retirando-a da pilha.
+Edição de texto: Pilhas são usadas para rastrear as alterações feitas em um documento de texto. Cada ação, como digitar
+um caractere ou desfazer uma ação, é registrada na pilha.
+Resolução de expressões matemáticas: Pilhas são usadas para avaliar expressões matemáticas na notação polonesa reversa
+(RPN), onde os operadores são aplicados aos operandos em ordem inversa à notação tradicional.
+Gerenciamento de histórico em aplicativos: Pilhas são usadas para manter o histórico de navegação ou ações em aplicativos,
+permitindo que os usuários naveguem para trás e para frente nas ações anteriores.
+Essas são apenas algumas das muitas aplicações das pilhas na programação e na computação em geral. A capacidade de manter
+um histórico ordenado de elementos e acessar o elemento mais recente de forma eficiente faz das pilhas uma escolha valiosa
+em muitos cenários.
+Implementações de Pilhas
+Pilhas podem ser implementadas de várias maneiras, e a escolha da implementação depende do contexto e dos requisitos do
+problema que está sendo resolvido. As duas implementações mais comuns de pilhas são baseadas em arrays e listas encadeadas.
+Pilha com Array
+Uma pilha baseada em array é uma implementação simples e eficiente. Um array é usado para armazenar os elementos da pilha,
+e um índice é mantido para rastrear o topo da pilha. Quando um elemento é empilhado (pushed), ele é adicionado ao array
+na posição do topo e o índice do topo é atualizado. Quando um elemento é desempilhado (pop), o elemento no topo do array
+é removido e o índice do topo é decrementado.
+Pilha com Lista Encadeada
+Uma pilha baseada em lista encadeada é outra opção de implementação. Nesse caso, os elementos da pilha são representados
+por nós de uma lista encadeada. O nó no topo da lista encadeada é o elemento mais recente na pilha, e o desempilhamento
+é feito removendo esse nó e atualizando a referência para o topo.
+A complexidade de tempo das operações em uma pilha varia dependendo da implementação. Em uma pilha baseada em array, as
+operações de push e pop têm complexidade de tempo O(1) em média, pois você pode acessar o topo do array diretamente. No
+entanto, se o array estiver cheio e precisar ser redimensionado, a complexidade pode se tornar O(n), onde n é o número
+de elementos na pilha.
+Em uma pilha baseada em lista encadeada, as operações de push e pop também têm complexidade de tempo O(1) em média, pois
+você pode adicionar ou remover elementos no início da lista encadeada sem percorrer todos os elementos. A complexidade de
+tempo para a operação de redimensionamento não se aplica aqui, já que a lista encadeada pode crescer ou encolher dinamicamente.
+Exemplos de Uso de Pilhas
+Vamos explorar alguns exemplos práticos de como as pilhas são usadas em programação.
+1. Verificação de Equilíbrio de Parênteses
+Uma aplicação comum de pilhas é verificar se uma expressão matemática contém parênteses balanceados. Isso envolve
+percorrer a expressão e usar uma pilha para rastrear os parênteses abertos. Quando um parêntese de abertura é encontrado,
+ele é empilhado. Quando um parêntese de fechamento é encontrado, é desempilhado e verificado se corresponde ao parêntese
+de abertura correspondente. Se a pilha estiver vazia no final da verificação, isso significa que todos os parênteses foram
+equilibrados. Caso contrário, a expressão não está corretamente formatada.
